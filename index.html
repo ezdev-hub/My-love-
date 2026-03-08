@@ -6,84 +6,161 @@
 <title>Mi niña ❤️</title>
 
 <style>
+
 body{
-    margin:0;
-    overflow:hidden;
-    font-family: Arial, sans-serif;
-    color:white;
-    text-align:center;
+margin:0;
+font-family:Arial, sans-serif;
+color:white;
+text-align:center;
+overflow:hidden;
 
-    background-image:url("spiderman.jpg");
-    background-size:contain;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-color:#b30000;
+/* FONDO COMPLETO */
+background:linear-gradient(180deg,#7a0000,#b30000,#7a0000);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-/* MENSAJE CENTRAL */
+/* MENSAJE */
 .message{
-    position:relative;
-    max-width:700px;
-    margin:100px auto;
-    padding:20px;
-    font-size:18px;
-    line-height:1.6;
-    z-index:2;
-    background:rgba(0,0,0,0.45);
-    border-radius:15px;
+max-width:700px;
+padding:25px;
+font-size:18px;
+line-height:1.6;
+z-index:2;
 }
 
-/* PARTÍCULAS */
+/* SPIDERMAN */
+.spider{
+position:fixed;
+bottom:20px;
+right:20px;
+width:120px;
+animation:move 4s ease-in-out infinite;
+z-index:3;
+}
+
+@keyframes move{
+0%{transform:translateX(-20px)}
+50%{transform:translateX(20px)}
+100%{transform:translateX(-20px)}
+}
+
+/* COSAS QUE CAEN */
 .fall{
-    position:fixed;
-    top:-20px;
-    font-size:20px;
-    animation: fall linear infinite;
-    z-index:1;
+position:fixed;
+top:-20px;
+font-size:20px;
+animation:fall linear infinite;
+z-index:1;
 }
 
 @keyframes fall{
-    to{
-        transform: translateY(110vh);
-    }
+to{transform:translateY(110vh)}
 }
+
+/* EXPLOSIÓN */
+.burst{
+position:fixed;
+font-size:25px;
+animation:burst 1s forwards;
+}
+
+@keyframes burst{
+0%{
+opacity:1;
+transform:translate(0,0) scale(1);
+}
+100%{
+opacity:0;
+transform:translate(var(--x),var(--y)) scale(2);
+}
+}
+
 </style>
 </head>
-
 <body>
 
 <div class="message">
+
 <h2>Mi niña 💖</h2>
+
 <p>
-Hoy quiero recordarte algo que nunca deberías olvidar: eres una de las mejores cosas que me han pasado en la vida. Desde que llegaste, todo cambió para mejor. Trajiste calma, alegría y una sensación tan bonita que no sabría explicar con palabras.<br><br>
+Hoy quiero recordarte algo que nunca deberías olvidar: eres una de las mejores cosas que me han pasado en la vida. Desde que llegaste, todo cambió para mejor. Trajiste calma, alegría y una sensación tan bonita que no sabría explicar con palabras.
 
-Eres mi refugio, mi paz y, al mismo tiempo, la razón por la que mi corazón late con tanta fuerza. Me encanta cómo logras hacerme sonreír incluso en mis días más difíciles.<br><br>
+<br><br>
 
-A veces pienso en lo afortunado que soy por tenerte, por poder compartir contigo mis sueños y mis risas. No hay distancia ni tiempo que cambie lo que siento por ti.<br><br>
+Eres mi refugio, mi paz y, al mismo tiempo, la razón por la que mi corazón late con tanta fuerza. Me encanta cómo logras hacerme sonreír incluso en mis días más difíciles.
+
+<br><br>
+
+A veces pienso en lo afortunado que soy por tenerte, por poder compartir contigo mis sueños y mis risas. No hay distancia ni tiempo que cambie lo que siento por ti.
+
+<br><br>
 
 Gracias por existir, por amarme y por hacerme sentir tan especial. 💖
 </p>
+
 </div>
 
+<img src="17b3e06974e7c210d46171f673c6099c.jpg" class="spider">
+
 <script>
+
+/* COSAS QUE CAEN */
 function createFall(){
-    const element = document.createElement("div");
-    element.classList.add("fall");
 
-    const items = ["❤️","💙","🕷️"];
-    element.innerHTML = items[Math.floor(Math.random()*items.length)];
+const element=document.createElement("div")
+element.classList.add("fall")
 
-    element.style.left = Math.random() * 100 + "vw";
-    element.style.animationDuration = (3 + Math.random() * 3) + "s";
+const items=[
+"❤️","💙","🕷️","🕸️",
+"amor","mi niña","hermosa","te amo","mi vida"
+]
 
-    document.body.appendChild(element);
+element.innerHTML=items[Math.floor(Math.random()*items.length)]
 
-    setTimeout(() => {
-        element.remove();
-    }, 6000);
+element.style.left=Math.random()*100+"vw"
+element.style.animationDuration=(3+Math.random()*4)+"s"
+
+document.body.appendChild(element)
+
+setTimeout(()=>{
+element.remove()
+},7000)
+
 }
 
-setInterval(createFall, 300);
+setInterval(createFall,300)
+
+/* EXPLOSIÓN AL TOCAR */
+document.addEventListener("click",(e)=>{
+
+for(let i=0;i<25;i++){
+
+const burst=document.createElement("div")
+burst.classList.add("burst")
+
+const items=["❤️","💙","🕷️","🕸️"]
+burst.innerHTML=items[Math.floor(Math.random()*items.length)]
+
+burst.style.left=e.clientX+"px"
+burst.style.top=e.clientY+"px"
+
+burst.style.setProperty("--x",(Math.random()*200-100)+"px")
+burst.style.setProperty("--y",(Math.random()*200-100)+"px")
+
+document.body.appendChild(burst)
+
+setTimeout(()=>{
+burst.remove()
+},1000)
+
+}
+
+})
+
 </script>
 
 </body>
